@@ -27,10 +27,10 @@ typedef long long int ll;
 typedef long double ld;
 
 using namespace std;
-
+ 
 void solve()
 {
-    
+
 }
 
 int main()
@@ -48,5 +48,6 @@ int main()
 
     return 0;
 }
+
 
 
