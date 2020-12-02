@@ -27,7 +27,7 @@ typedef long long int ll;
 typedef long double ld;
 
 using namespace std;
- 
+
 void solve()
 {
 

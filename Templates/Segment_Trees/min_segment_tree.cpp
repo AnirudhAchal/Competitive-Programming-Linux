@@ -1,10 +1,10 @@
 // Author : Anirudh Achal
-// Description : Sum segment tree
+// Description : Min segment tree
 
 // Instructions : 
-// 1. To construct a new 'sum_seg_tree' struct, use 'sum_seg_tree <tree_name>(<vector_name>, <vector_size>)'
+// 1. To construct a new 'min_seg_tree' struct, use 'min_seg_tree <tree_name>(<vector_name>, <vector_size>)'
 // 2. To update an entry in the ith location (zero indexed) to V, use '<tree_name>.update(i, V)'
-// 3. To get the sum of a range of elements from L to R ie. [L, R), use '<tree_name>.get_sum(L, R)'
+// 3. To get the sum of a range of elements from L to R ie. [L, R), use '<tree_name>.get_min(L, R)'
 
 // Points to remember :
 // 1. Zero based indexed
@@ -12,7 +12,7 @@
 // 3. If memory limit exceeded try changing ll to int
 // 4. Range L, R => [L, R) ie. including L excluding R
 
-struct sum_seg_tree {
+struct min_seg_tree {
 
     int size = 1;
     vector<ll> tree;
@@ -24,7 +24,7 @@ struct sum_seg_tree {
             size *= 2;
         }
 
-        tree = vector<ll>(2 * size, 0LL);
+        tree = vector<ll>(2 * size, LLONG_MAX);
 
         construct(arr, 0, 0, size, n);
     }
@@ -45,7 +45,7 @@ struct sum_seg_tree {
         construct(arr, 2 * node + 1, lx, mid, n);
         construct(arr, 2 * node + 2, mid, rx, n);
 
-        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];
+        tree[node] = min(tree[2 * node + 1], tree[2 * node + 2]);
     }
 
     void update(int pos, ll val)
@@ -71,15 +71,15 @@ struct sum_seg_tree {
             update(pos, val, 2 * node + 2, mid, rx);
         }
 
-        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];
+        tree[node] = min(tree[2 * node + 1], tree[2 * node + 2]);
     }
 
-    ll get_sum(int l, int r)
+    ll get_min(int l, int r)
     {
-        return get_sum(l, r, 0, 0, size);
+        return get_min(l, r, 0, 0, size);
     }
 
-    ll get_sum(int l, int r, int node, int lx, int rx)
+    ll get_min(int l, int r, int node, int lx, int rx)
     {
         if(l <= lx && rx <= r)
         {
@@ -88,15 +88,16 @@ struct sum_seg_tree {
 
         if(lx >= r || l >= rx)
         {
-            return 0;
+            return LLONG_MAX;
         }
 
         int mid = lx + (rx - lx) / 2;
 
-        ll sum_left = get_sum(l, r, 2 * node + 1, lx, mid);
-        ll sum_right = get_sum(l, r, 2 * node + 2, mid, rx);
+        ll min_left = get_min(l, r, 2 * node + 1, lx, mid);
+        ll min_right = get_min(l, r, 2 * node + 2, mid, rx);
 
-        return sum_left + sum_right;
+        return min(min_left, min_right);
     }
 };
+
 
