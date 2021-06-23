@@ -71,7 +71,7 @@ struct max_seg_tree {
             update(pos, val, 2 * node + 2, mid, rx);
         }
 
-        tree[node] = min(tree[2 * node + 1], tree[2 * node + 2]);
+        tree[node] = max(tree[2 * node + 1], tree[2 * node + 2]);
     }
 
     ll get_max(int l, int r)
